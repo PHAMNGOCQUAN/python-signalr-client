@@ -67,7 +67,7 @@ class Transport:
         except RuntimeError:
             self.ws_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.ws_loop)
-        self.invoke_queue = asyncio.Queue(loop=self.ws_loop)
+        self.invoke_queue = asyncio.Queue()
 
     def _connect(self):
         self._conn_handler = asyncio.ensure_future(self._socket(self.ws_loop), loop=self.ws_loop)
