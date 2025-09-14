@@ -21,6 +21,7 @@ class Connection(object):
         self.session = session
         self.received = EventHook()
         self.error = EventHook()
+        self.headers=headers
         self.__transport = Transport(self,self.headers,**kwargs)
         self.started = False
 
@@ -30,7 +31,6 @@ class Connection(object):
                 await self.error.fire(error)
 
         self.received += handle_error
-        self.headers=headers
 
     def start(self):
         self.hub = [hub_name for hub_name in self.__hubs][0]
