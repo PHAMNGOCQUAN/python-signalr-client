@@ -34,7 +34,7 @@ except ModuleNotFoundError:
 
 
 class Transport:
-    def __init__(self, connection):
+    def __init__(self, connection,headers=None,**kwargs):
         self._connection = connection
         self._ws_params = None
         self._conn_handler = None
@@ -42,12 +42,13 @@ class Transport:
         self.invoke_queue = None
         self.ws = None
         self._set_loop_and_queue()
+        self.headers=headers
 
     # ===================================
     # Public Methods
 
     def start(self):
-        self._ws_params = WebSocketParameters(self._connection)
+        self._ws_params = WebSocketParameters(self._connection,self.headers,**kwargs)
         self._connect()
         if not self.ws_loop.is_running():
             self.ws_loop.run_forever()
