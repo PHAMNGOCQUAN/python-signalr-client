@@ -51,7 +51,6 @@ class Transport:
     def start(self):
         self._ws_params = WebSocketParameters(self._connection,self.headers,**self.kwargs)
         self._connect()
-        print("All tasks:", asyncio.all_tasks(self.ws_loop))
         if not self.ws_loop.is_running():
             self.ws_loop.run_forever()
 
@@ -76,7 +75,8 @@ class Transport:
         self._conn_handler = asyncio.ensure_future(self._socket(self.ws_loop), loop=self.ws_loop)
 
     async def _socket(self, loop):
-        async with websockets.connect(self._ws_params.socket_url, extra_headers=self._ws_params.headerss) as self.ws:
+        async with websockets.connect(self._ws_params.socket_url, extra_headers=self._ws_params.headers,
+                                      loop=loop) as self.ws:
             self._connection.started = True
             await self._master_handler(self.ws)
 
