@@ -11,7 +11,7 @@ import requests
 
 
 class WebSocketParameters:
-    def __init__(self, connection):
+    def __init__(self, connection,headers=None,verify_ssl=False):
         self.protocol_version = '1.5'
         self.raw_url = self._clean_url(connection.url)
         self.conn_data = self._get_conn_data(connection.hub)
@@ -20,6 +20,8 @@ class WebSocketParameters:
         self.socket_conf = None
         self._negotiate()
         self.socket_url = self._get_socket_url()
+        self.headerss=headers
+        self.verify_ssl=verify_ssl
 
     @staticmethod
     def _clean_url(url):
@@ -46,7 +48,7 @@ class WebSocketParameters:
         })
         url = self._format_url(self.raw_url, 'negotiate', query)
         self.headers = dict(self.session.headers)
-        request = self.session.get(url)
+        request = self.session.post(url,headers=self.headerss,verify=self.verify_ssl)
         self.headers['Cookie'] = self._get_cookie_str(request.cookies)
         self.socket_conf = request.json()
 
