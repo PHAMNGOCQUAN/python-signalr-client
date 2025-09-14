@@ -88,6 +88,7 @@ class Transport:
 
         for task in pending:
             task.cancel()
+        print("Master handler exited, pending tasks cancelled")
 
     async def _consumer_handler(self, ws):
         while True:
