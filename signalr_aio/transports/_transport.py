@@ -84,7 +84,10 @@ class Transport:
     async def _master_handler(self, ws):
         consumer_task = asyncio.ensure_future(self._consumer_handler(ws))
         producer_task = asyncio.ensure_future(self._producer_handler(ws))
-        
+        done, pending = await asyncio.wait([consumer_task, producer_task], return_when=asyncio.FIRST_EXCEPTION)
+
+        for task in pending:
+            task.cancel()
         print("Master handler exited, pending tasks cancelled")
 
     async def _consumer_handler(self, ws):
