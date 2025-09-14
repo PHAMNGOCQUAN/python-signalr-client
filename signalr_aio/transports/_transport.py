@@ -51,17 +51,11 @@ class Transport:
     def start(self):
         self._ws_params = WebSocketParameters(self._connection,self.headers,**self.kwargs)
         self._connect()
-        print(self._ws_params.socket_url)
-        print(self._ws_params.headerss)
         if not self.ws_loop.is_running():
             self.ws_loop.run_forever()
 
     def send(self, message):
-        async def debug_put():
-            print("[DEBUG] putting into queue:", message)
-            await self.invoke_queue.put(InvokeEvent(message))
-            print("[DEBUG] queue size now:", self.invoke_queue.qsize())
-        asyncio.Task(debug_put(), loop=self.ws_loop)
+        asyncio.Task(self.invoke_queue.put(InvokeEvent(message)), loop=self.ws_loop)
 
     def close(self):
         asyncio.Task(self.invoke_queue.put(CloseEvent()), loop=self.ws_loop)
