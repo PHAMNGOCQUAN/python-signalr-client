@@ -84,22 +84,10 @@ class Transport:
     async def _master_handler(self, ws):
         consumer_task = asyncio.ensure_future(self._consumer_handler(ws))
         producer_task = asyncio.ensure_future(self._producer_handler(ws))
-        try:
-            # Run both until they are BOTH finished (not just the first error)
-            await asyncio.gather(consumer_task, producer_task)
-        except Exception as e:
-            print("Master handler error:", e)
-        finally:
-            if not consumer_task.done():
-                consumer_task.cancel()
-            if not producer_task.done():
-                producer_task.cancel()
-            print("Master handler exited")
-        #done, pending = await asyncio.wait([consumer_task, producer_task], return_when=asyncio.FIRST_EXCEPTION)
+        done, pending = await asyncio.wait([consumer_task, producer_task], return_when=asyncio.FIRST_EXCEPTION)
 
-        #for task in pending:
-            #task.cancel()
-        #print("Master handler exited, pending tasks cancelled")
+        for task in pending:
+            task.cancel()
 
     async def _consumer_handler(self, ws):
         while True:
