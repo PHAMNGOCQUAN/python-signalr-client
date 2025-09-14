@@ -43,12 +43,13 @@ class Transport:
         self.ws = None
         self._set_loop_and_queue()
         self.headers=headers
+        self.kwargs=kwargs
 
     # ===================================
     # Public Methods
 
     def start(self):
-        self._ws_params = WebSocketParameters(self._connection,self.headers,**kwargs)
+        self._ws_params = WebSocketParameters(self._connection,self.headers,**self.kwargs)
         self._connect()
         if not self.ws_loop.is_running():
             self.ws_loop.run_forever()
