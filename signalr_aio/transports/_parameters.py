@@ -18,10 +18,10 @@ class WebSocketParameters:
         self.session = connection.session
         self.headers = None
         self.socket_conf = None
-        self._negotiate()
-        self.socket_url = self._get_socket_url()
         self.headerss=headers
         self.verify_ssl=verify_ssl
+        self._negotiate()
+        self.socket_url = self._get_socket_url()
 
     @staticmethod
     def _clean_url(url):
