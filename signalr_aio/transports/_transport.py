@@ -75,8 +75,7 @@ class Transport:
         self._conn_handler = asyncio.ensure_future(self._socket(self.ws_loop))
 
     async def _socket(self, loop):
-        async with websockets.connect(self._ws_params.socket_url, additional_headers=self._ws_params.headerss) as self.ws:
-            print("All tasks:", asyncio.all_tasks(self.ws_loop))
+        async with websockets.connect(self._ws_params.socket_url, additional_headers=self._ws_params.headerss) as self.ws
             self._connection.started = True
             await self._master_handler(self.ws)
 
