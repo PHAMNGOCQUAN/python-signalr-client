@@ -13,7 +13,7 @@ from .transports import Transport
 class Connection(object):
     protocol_version = '1.5'
 
-    def __init__(self, url, session=None):
+    def __init__(self, url,headers=None,**kwargs, session=None):
         self.url = url
         self.__hubs = {}
         self.__send_counter = -1
@@ -21,7 +21,8 @@ class Connection(object):
         self.session = session
         self.received = EventHook()
         self.error = EventHook()
-        self.__transport = Transport(self)
+        self.headers=headers
+        self.__transport = Transport(self,self.headers,**kwargs)
         self.started = False
 
         async def handle_error(**data):
