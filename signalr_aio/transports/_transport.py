@@ -51,6 +51,7 @@ class Transport:
     def start(self):
         self._ws_params = WebSocketParameters(self._connection,self.headers,**self.kwargs)
         self._connect()
+        print("All tasks:", asyncio.all_tasks(self.ws_loop))
         if not self.ws_loop.is_running():
             self.ws_loop.run_forever()
 
