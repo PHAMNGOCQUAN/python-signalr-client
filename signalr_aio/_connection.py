@@ -13,7 +13,7 @@ from .transports import Transport
 class Connection(object):
     protocol_version = '1.5'
 
-    def __init__(self, url,headers=None,**kwargs, session=None):
+    def __init__(self, url, session=None,headers=None,**kwargs):
         self.url = url
         self.__hubs = {}
         self.__send_counter = -1
