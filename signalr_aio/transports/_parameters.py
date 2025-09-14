@@ -51,7 +51,6 @@ class WebSocketParameters:
         request = self.session.post(url,headers=self.headerss,verify=self.verify_ssl)
         self.headers['Cookie'] = self._get_cookie_str(request.cookies)
         self.socket_conf = request.json()
-        print(self.socket_conf)
 
     @staticmethod
     def _get_cookie_str(request):
