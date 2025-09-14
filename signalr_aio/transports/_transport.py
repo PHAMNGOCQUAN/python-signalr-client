@@ -50,7 +50,6 @@ class Transport:
 
     def start(self):
         self._ws_params = WebSocketParameters(self._connection,self.headers,**self.kwargs)
-        print(self._ws_params.socket_url)
         self._connect()
         if not self.ws_loop.is_running():
             self.ws_loop.run_forever()
