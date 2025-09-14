@@ -72,7 +72,6 @@ class Transport:
         self.invoke_queue = asyncio.Queue()
 
     def _connect(self):
-        print(self._ws_params.headerss)
         self._conn_handler = asyncio.ensure_future(self._socket(self.ws_loop), loop=self.ws_loop)
 
     async def _socket(self, loop):
