@@ -91,7 +91,6 @@ class Transport:
         while True:
             message = await ws.recv()
             if len(message) > 0:
-                print("🔎 RAW:", message)
                 data = loads(message)
                 await self._connection.received.fire(**data)
 
