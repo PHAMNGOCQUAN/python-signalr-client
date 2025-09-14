@@ -57,7 +57,7 @@ class Transport:
             self.ws_loop.run_forever()
 
     def send(self, message):
-    async def debug_put():
+        async def debug_put():
         print("[DEBUG] putting into queue:", message)
         await self.invoke_queue.put(InvokeEvent(message))
         print("[DEBUG] queue size now:", self.invoke_queue.qsize())
