@@ -72,10 +72,10 @@ class Transport:
         self.invoke_queue = asyncio.Queue()
 
     def _connect(self):
+        print(self._ws_params.headerss)
         self._conn_handler = asyncio.ensure_future(self._socket(self.ws_loop), loop=self.ws_loop)
 
     async def _socket(self, loop):
-        print(self._ws_params.headerss)
         async with websockets.connect(self._ws_params.socket_url, extra_headers=self._ws_params.headerss,
                                       loop=loop) as self.ws:
             self._connection.started = True
