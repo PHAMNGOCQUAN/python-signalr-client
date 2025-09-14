@@ -89,6 +89,7 @@ class Transport:
 
     async def _consumer_handler(self, ws):
         while True:
+            print(ws.recv())
             message = await ws.recv()
             if len(message) > 0:
                 data = loads(message)
