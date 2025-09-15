@@ -21,13 +21,4 @@ class EventHook(object):
 
     async def fire(self, *args, **kwargs):
         for handler in self._handlers:
-            try:
-                await handler(*args, **kwargs)
-            except Exception as e:
-                print(f"🔥 Handler {handler.__name__} crashed with: {e}")
-
-    #async def fire(self, *args, **kwargs):
-     #   print(self._handlers)
-      #  print(args)
-       # for handler in self._handlers:
-        #    await handler(*args, **kwargs)
+            await handler(*args, **kwargs)
