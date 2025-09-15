@@ -20,7 +20,7 @@ class EventHook(object):
         return self
 
     async def fire(self, *args, **kwargs):
-        print(handler)
+        print(self._handlers)
         print(args)
         for handler in self._handlers:
             await handler(*args, **kwargs)
