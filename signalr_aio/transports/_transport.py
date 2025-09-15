@@ -104,7 +104,6 @@ class Transport:
                     if event.type == 'INVOKE':
                         print(dumps(event.message))
                         await ws.send(dumps(event.message))
-                        print(ws.message)
                     elif event.type == 'CLOSE':
                         await ws.close()
                         while ws.open is True:
