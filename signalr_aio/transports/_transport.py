@@ -105,7 +105,7 @@ class Transport:
                         print(dumps(event.message))
                         await ws.send(dumps(event.message))
                         print("Subscribed to F:ALL")
-                        for message in ws:
+                        for message in ws.recv():
                             print("Received:", message)
                     elif event.type == 'CLOSE':
                         await ws.close()
