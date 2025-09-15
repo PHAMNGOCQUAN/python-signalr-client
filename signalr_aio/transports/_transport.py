@@ -82,18 +82,12 @@ class Transport:
             await self._master_handler(self.ws)
 
     async def _master_handler(self, ws):
-        await asyncio.gather(
-            self._consumer_handler(ws),
-            self._producer_handler(ws),
-        )
+        consumer_task = asyncio.ensure_future(self._consumer_handler(ws))
+        producer_task = asyncio.ensure_future(self._producer_handler(ws))
+        done, pending = await asyncio.wait([consumer_task, producer_task], return_when=asyncio.FIRST_EXCEPTION)
 
-    #async def _master_handler(self, ws):
-     #   consumer_task = asyncio.ensure_future(self._consumer_handler(ws))
-      #  producer_task = asyncio.ensure_future(self._producer_handler(ws))
-       # done, pending = await asyncio.wait([consumer_task, producer_task], return_when=asyncio.FIRST_EXCEPTION)
-#
- #       for task in pending:
-  #          task.cancel()
+        for task in pending:
+            task.cancel()
 
     async def _consumer_handler(self, ws):
         while True:
