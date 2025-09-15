@@ -104,15 +104,6 @@ class Transport:
                     if event.type == 'INVOKE':
                         print(dumps(event.message))
                         await ws.send(dumps(event.message))
-                        
-                        while True:  # Loop to keep receiving messages
-                            try:
-                                response = await ws.recv()  # Wait for the next response
-                                print("Received message:", response)
-                            except Exception as e:
-                                print("Error receiving message:", e)
-                                break  # Break out of the loop if receiving fails (e.g., connection closed)
-
                     elif event.type == 'CLOSE':
                         await ws.close()
                         while ws.open is True:
