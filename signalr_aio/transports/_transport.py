@@ -92,8 +92,7 @@ class Transport:
             message = await ws.recv()
             if len(message) > 0:
                 data = loads(message)
-                print(data)
-                #await self._connection.received.fire(**data)
+                await self._connection.received.fire(data)
 
     async def _producer_handler(self, ws):
         while True:
